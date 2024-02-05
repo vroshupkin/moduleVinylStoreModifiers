@@ -103,6 +103,7 @@ namespace AutoColumn
 
         const cache = CacheService.getScriptCache();
         this.cache_values = cache.get(`cell_types_header: ${this.sheet.getSheetName()}`) ?? '';
+        Logger.log(this.cache_values);
       };
     }
 
@@ -121,11 +122,14 @@ namespace AutoColumn
        */
       do = (y: number) => 
       {
+        Logger.log(y);
         const { header_row: header_range, values_coords } = this.data_source;
 
         const notes = header_range.getNotes()[0];
+        Logger.log(notes);
         if(!Array.isArray(notes)) { return; }
 
+        
         // const rows = y - values_coords.y + 1;
 
         for (const [ i, note ] of notes.entries()) 
@@ -139,18 +143,22 @@ namespace AutoColumn
           const note_type = (note + '').trim();
           
 
-          if(note_type.includes('DiscogsFormat'))
+          // if(note_type.includes('DiscogsFormat'))
+          // {
+          //   Tools.timestampDecorator(this.discogsFormatAuto, 'discogsFormat')(y, x, this.getParam(note));
+          // }
+          // Logger.log(note_type);
+          if(note_type.toLowerCase().includes('auto'))
           {
-            Tools.timestampDecorator(this.discogsFormatAuto, 'discogsFormat')(y, x, this.getParam(note));
-          }
-          else if(note_type.toLowerCase().includes('auto'))
-          {
-            this.autoFunction(x, y);
+            // Logger.log(note_type);
+            this.autoFunction(y, x);
           }
           else if(note_type.includes('SetValues'))
           {
             this.setValues(y, x, this.getParam(note));
           }
+
+
         }
       };
 
@@ -189,7 +197,10 @@ namespace AutoColumn
 
       private discogsFormatAuto = (y: number, x: number, param: string) =>
       {
-        this.autoColumnFabricFunction(y, x, param, Discogs.formatHandle);
+        
+        // @ts-ignore
+        // this.autoColumnFabricFunction(y, x, param, Discogs.formatHandle);
+        
       };
 
       private setValues = (y: number, x: number, param: string) => 
