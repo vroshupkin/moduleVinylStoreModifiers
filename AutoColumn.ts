@@ -141,13 +141,8 @@ namespace AutoColumn
 
           const x = values_coords.x + i;
           const note_type = (note + '').trim();
-          
 
-          // if(note_type.includes('DiscogsFormat'))
-          // {
-          //   Tools.timestampDecorator(this.discogsFormatAuto, 'discogsFormat')(y, x, this.getParam(note));
-          // }
-          // Logger.log(note_type);
+          
           if(note_type.toLowerCase().includes('auto'))
           {
             // Logger.log(note_type);
@@ -157,6 +152,13 @@ namespace AutoColumn
           {
             this.setValues(y, x, this.getParam(note));
           }
+
+
+          if(note_type.includes('DiscogsFormat'))
+          {
+            Tools.timestampDecorator(this.discogsFormatAuto, 'discogsFormat')(y, x, this.getParam(note));
+          }
+          // Logger.log(note_type);
 
 
         }
@@ -199,7 +201,7 @@ namespace AutoColumn
       {
         
         // @ts-ignore
-        // this.autoColumnFabricFunction(y, x, param, Discogs.formatHandle);
+        this.autoColumnFabricFunction(y, x, param, Discogs.formatHandle);
         
       };
 
